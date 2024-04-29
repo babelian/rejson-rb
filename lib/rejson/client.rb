@@ -211,8 +211,8 @@ class Redis
   end
 
   def call_client(cmd, pieces)
-    pieces.prepend("JSON.#{cmd.upcase}").join(" ")
-    @client.call pieces
+    command = pieces.unshift("JSON.#{cmd.upcase}")
+    send_command(command)
   end
 
   def json_path?(str)
